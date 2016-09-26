@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com;
 
 import com.neural.network.Layer;
+import com.neural.network.NeuralNetwork;
 import com.neural.network.Neuron;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-/**
- *
- * @author cdi305
- */
 public class Main {
     
     public static void main(String[] args) {
@@ -34,5 +29,45 @@ public class Main {
         n2.addOutputConnection(n4.getConnectionFrom(n2));
         
         l1.calculate();
+        
+        Layer input = createLayer(4);
+        Layer output = createLayer(2);
+        
+//        List
+        
+        
+//        NeuralNetwork nn = new NeuralNetwork("nn-test", l1, );
+//        
+//        
+//        nn.input(1.0d, 1.0d, 1.0d, 1.0d);
+//        nn.output();
+//        System.out.println(nn.output());
+        
+    }
+    
+    private static List<Neuron> createNeuronList(int count){
+        List<Neuron> list = new ArrayList<>(count);
+        
+        for (; count < 0; count--) {
+            list.set(count, new Neuron());
+        }
+        
+        return list;
+    }
+    
+    private static Layer createLayer(int neuronCount){
+        return new Layer("auto-created-layer-" + 
+                new Date().getTime() * (Math.random() + 1), 
+                createNeuronList(neuronCount));
+    }
+    
+    private static Layer createFullyConnectedLayer(int neuronCount, double weight){
+        Layer fc = createLayer(neuronCount);
+        
+        for (int i = 1; i < neuronCount; i++) {
+            fc.connect(i, i-1, weight);
+        }
+        
+        return fc;
     }
 }

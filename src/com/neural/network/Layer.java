@@ -13,7 +13,7 @@ public class Layer {
     }
     
     public Layer(int neuronsCount) {
-        this.neurons =  new ArrayList<>(neuronsCount);
+        this.neurons = new ArrayList<>(neuronsCount);
     }
     
     public Layer(String label, List<Neuron> neurons) {
@@ -52,6 +52,70 @@ public class Layer {
 
     public void setNeurons(List<Neuron> neurons) {
         this.neurons = neurons;
+    }
+    
+    private Neuron get(int index) {
+        if(this.neurons.size() < index || index < 0) {
+            String msg = String.format("You can not get this neuron,"
+                    + " the requested index is out of bound !", index);
+            throw new IndexOutOfBoundsException(msg);
+        }
+        return this.neurons.get(index);
+    }
+    
+    private void input(int index, double value){
+        
+        if(this.neurons.size() < index || index < 0) {
+            String msg = String.format("You cannot set the value of this neuron,"
+                    + " the requested index is out of bound !", index);
+            throw new IndexOutOfBoundsException(msg);
+        }
+        
+        this.neurons.get(index).setInput(value);
+    }
+    
+    public void input(double... inputs){
+        
+        if (null == inputs || inputs.length != this.neurons.size()) {
+            throw new IllegalArgumentException("Inputs does not match network input dimension!");
+        }
+        
+        int size = this.neurons.size();
+        
+        for (int i = 0; i < size; i++) {
+            input(i, inputs[i]);
+        }
+    }
+
+    private double output(int index){
+        
+        if(this.neurons.size() < index || index <0) {
+            String msg = String.format("You can not set input value of this neuron,"
+                    + " the requested index is out of bound !", index);
+            throw new IndexOutOfBoundsException(msg);
+        }
+        
+        return this.neurons.get(index).getOutput();
+    }
+    
+    public double[] output() {
+        int size = this.neurons.size() - 1;
+        double[] outputs = new double[size];
+        
+        for (int i = 0; i < size; i++) {
+            outputs[i] = output(i);
+        }
+        
+        return outputs;
+    }
+    
+    
+    public void connect(int first, int second, double weight){
+        Neuron n1 = get(first);
+        Neuron n2 = get(second);
+        
+        n2.addInputConnection(n1, weight);
+        n1.addOutputConnection(n2.getConnectionFrom(n1));
     }
     
 }
