@@ -1,6 +1,7 @@
-package com.neural.network;
+package com.neural.network.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Layer {
@@ -22,7 +23,8 @@ public class Layer {
     }
     
     public void calculate() {
-        getNeurons().parallelStream().forEach(Neuron::calculate);
+//        getNeurons().parallelStream().forEach(Neuron::calculate);
+        getNeurons().stream().forEach(Neuron::calculate);
     }
     
     public void addNeuron(Neuron neuron) {
@@ -54,7 +56,7 @@ public class Layer {
         this.neurons = neurons;
     }
     
-    private Neuron get(int index) {
+    public Neuron get(int index) {
         if(this.neurons.size() < index || index < 0) {
             String msg = String.format("You can not get this neuron,"
                     + " the requested index is out of bound !", index);
@@ -77,7 +79,8 @@ public class Layer {
     public void input(double... inputs){
         
         if (null == inputs || inputs.length != this.neurons.size()) {
-            throw new IllegalArgumentException("Inputs does not match network input dimension!");
+            throw new IllegalArgumentException("Inputs does not match network input dimension!"
+                    + " Wanted " + this.neurons.size() + " get " + inputs.length);
         }
         
         int size = this.neurons.size();
@@ -99,7 +102,7 @@ public class Layer {
     }
     
     public double[] output() {
-        int size = this.neurons.size() - 1;
+        int size = this.neurons.size();
         double[] outputs = new double[size];
         
         for (int i = 0; i < size; i++) {

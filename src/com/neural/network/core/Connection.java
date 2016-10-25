@@ -1,4 +1,4 @@
-package com.neural.network;
+package com.neural.network.core;
 
 public class Connection {
     

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neural.network.input;
+package com.neural.network.core.input;
 
-import com.neural.network.Connection;
+import com.neural.network.core.Connection;
 import java.util.List;
 
 /**

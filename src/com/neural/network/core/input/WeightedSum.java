@@ -1,6 +1,6 @@
-package com.neural.network.input;
+package com.neural.network.core.input;
 
-import com.neural.network.Connection;
+import com.neural.network.core.Connection;
 import java.util.List;
 
 public class WeightedSum implements InputFunction {

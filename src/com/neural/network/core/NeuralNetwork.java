@@ -1,6 +1,7 @@
-package com.neural.network;
+package com.neural.network.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NeuralNetwork {
@@ -33,6 +34,13 @@ public class NeuralNetwork {
     
     public double[] output() {
         return this.output.output();
+    }
+    
+    public void calculate() {
+        input.calculate();
+//        layers.parallelStream().forEach(Layer::calculate);
+        layers.stream().forEach(Layer::calculate);
+        output.calculate();
     }
     
 }

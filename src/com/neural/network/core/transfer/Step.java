@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.neural.network.transfer;
+package com.neural.network.core.transfer;
 
 /**
  * Step neuron transfer function.
@@ -13,26 +13,27 @@ package com.neural.network.transfer;
  */
 public class Step extends AbstractTransferFunction {
     
-    private final double yHigh;
-    private final double yLow;
+    private final double min;
+    private final double high;
+    private final double low;
 
     public Step() {
-        this(1D, 0D);
+        this(0D, 1D, 0D);
     }
 
-    public Step(double yHigh, double yLow) {
-        this.yHigh = yHigh;
-        this.yLow = yLow;
+    public Step(double min, double high, double low) {
+        this.min = min;
+        this.high = high;
+        this.low = low;
     }
     
     @Override
     public double getOutput(double input) {
-        
-        if (input > 0d) {
-            return yHigh;
+        if (input > this.min) {
+            return this.high;
         }
         
-        return yLow;
+        return this.low;
     }
     
 }

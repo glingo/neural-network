@@ -1,9 +1,9 @@
-package com.neural.network;
+package com.neural.network.core;
 
-import com.neural.network.input.InputFunction;
-import com.neural.network.input.WeightedSum;
-import com.neural.network.transfer.Step;
-import com.neural.network.transfer.TransferFunction;
+import com.neural.network.core.input.InputFunction;
+import com.neural.network.core.input.WeightedSum;
+import com.neural.network.core.transfer.Step;
+import com.neural.network.core.transfer.TransferFunction;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +39,18 @@ public class Neuron {
     }
     
     public void calculate(){
-        this.input  = inputFunction.getOutput(getInConnections());
+        this.input  = getInputConnectionOutput();
         this.output = transferFunction.getOutput(input);
+    }
+    
+    protected double getInputConnectionOutput() {
+        
+        if(!this.hasInputConnections()) {
+            // throw an error ? 
+            return 0d;
+        }
+        
+        return getInputFunction().getOutput(getInConnections());
     }
     
     public void reset(){
@@ -125,6 +135,7 @@ public class Neuron {
     }
     
     public final List<Connection> getInConnections() {
+        
         if(inConnections == null) {
             inConnections = new ArrayList<>();
         }

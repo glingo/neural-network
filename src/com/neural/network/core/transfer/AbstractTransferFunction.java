@@ -1,13 +1,13 @@
-package com.neural.network.transfer;
+package com.neural.network.core.transfer;
 
 public abstract class AbstractTransferFunction implements TransferFunction {
     
-    private double output;
+    protected double output;
 
     @Override
     public abstract double getOutput(double input);
     
-    public double getDerivate(double input){
+    public double getDerivative(double input){
         return 1D;
     }
     
